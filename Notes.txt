@@ -1,0 +1,103 @@
+React is a library for building user interfaces.
+
+What makes React so special?
+	Composition
+	Unidirecitonal Dataflow
+	Explicit Mutations
+	Just JavaScript
+	
+Composition:
+
+	Building entire application from independent components (e.g. <Slider /> <Router /> <Carousel />)
+	Helps to break large, complex apps into smaller chunks that can be worked on independently.
+	Big two questions when designing component: What state does it need, and what will the UI look like?
+	Makes components highly re-usable - can use the same component across multiple pages.
+	
+Unidirectional Dataflow:
+
+	jQuery:
+						State
+	Event Handler -> Update DOM
+	Event Hanlder -> Update DOM
+	Event Handler -> Update DOM
+	Event Handler -> Update DOM
+	Event Handler -> Update DOM
+
+		The above is the IDEAL situation.  Often times, these arrows criss-cross over one another, and DOM manipulation gets incredibly complex and 
+		hard to predict.
+
+		
+	React:
+	
+	Event Handler ---->
+	Event Handler ---->
+	Event Handler ----> State ----> UI
+	Event Handler ---->
+	Event Handler ---->
+	
+		All event handlers flow into state which lives inside individual components, not DOM, and React is responsible for updating UI.
+		UI is basically a function of state.  We only need to worry about the state, not UI.
+		
+	Explicit Mutations:
+	
+		e.g. this.setState({
+			handle: 'tylermcginnis',
+			authed: true
+		});
+		
+		We explicitly change the state, and from there React alters the UI appropriately.  We never have to worry about changing the UI directly.
+		
+	Just JavaScript:
+	
+		Example code snippet:
+		
+		import React from 'react';
+		
+		function FriendsList(){
+			const friends = ['Jordyn', 'Mikenzi', 'Jake'];
+			
+			return (
+				<ul>
+					{friends.map((name) => (
+						<li>
+							{name}
+						</li>
+					))}
+				</ul>
+			);
+		}
+		
+		export default FriendsList;
+		
+	Shared Mutable State - Means we are sharing the same state throughout our entire application.  So, for example, if we have three views and they 
+	all depend on the same state, changing the state in one view will change it in all.  It isn't necessarily a bad thing, but could potentially lead 
+	to unexpected changes in one view when state is changed in another.
+		
+Difference between props and state:
+
+	State is local to a component - a component can manage its own state.  Props are when you pass data into a component.
+	
+
+React vs. React-DOM
+
+	You can render React in more than one environment (e.g. React Native).
+	React-DOM is basically saying that we want to render React components to the DOM, as opposed to any other platform.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+		
