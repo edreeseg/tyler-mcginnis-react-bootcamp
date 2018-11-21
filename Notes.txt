@@ -83,16 +83,24 @@ React vs. React-DOM
 	You can render React in more than one environment (e.g. React Native).
 	React-DOM is basically saying that we want to render React components to the DOM, as opposed to any other platform.
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+Lifecycle Hooks: e.g. when the component is mounted to the DOM, when it is removed from the DOM, when it receives new props, etc.
+
+	constructor: Establishes the initial state of your component.
+	
+	componentWillMount: Being deprecated, do not use.
+	
+	render: Describes the UI for the component.
+	
+	componentDidMount: Called after the component is mounted into the DOM.  Typically used for things like AJAX requests.
+	
+	componentDidUpdate: Called whenever the component updates (e.g. receives new props, state changes).  Is not called on initial render.
+	
+	componentWillUnmount: Called when the component is going to be removed from the DOM.
+	
+	static getDerivedStateFromProps: Used when you want to get the props you are receiving from the parent component and set them on local state 
+	of component.
+	
+	shouldComponentUpdate: Passed nextProps and nextState.  If it returns false, component won't re-render.
 
 
 
