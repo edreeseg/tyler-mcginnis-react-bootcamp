@@ -45,11 +45,49 @@
     }
     render() {
         return (
-        <p>
+        <h2>
             {this.state.text}
-        </p>
+        </h2>
         )
     }
+    }
+
+    function Nav(props){
+        return (
+            <ul>
+                <li><a href = '#all' onClick={() => props.onLanguageChange('all')}>All</a></li>
+                <li><a href = '#js' onClick={() => props.onLanguageChange('javascript')}>JavaScript</a></li>
+                <li><a href = '#ruby' onClick={() => props.onLanguageChange('ruby')}>Ruby</a></li>
+                <li><a href = '#python' onClick={() => props.onLanguageChange('python')}>Python</a></li>
+                <li><a href = '#java' onClick={() => props.onLanguageChange('java')}>Java</a></li>
+            </ul>
+        )
+    }
+
+    function RepoDisplay(props){
+        return props.loading ? (
+                    <Loading />
+                ) : (
+                    <div>
+                        <h1>Most Popular {props.language} Repos</h1>
+                        <div style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                }}>
+                            {props.repos.map(x => {
+                                return (
+                                <div key={x.name}>
+                                    <ul>
+                                        <li><a href={x.html_url}>{x.name}</a></li>
+                                        <li>{`@${x.owner.login}`}</li>
+                                        <li>{`${x.stargazers_count} stars`}</li>
+                                    </ul>
+                                </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )
     }
 
     class App extends React.Component {
@@ -71,6 +109,9 @@
                 });
             });
     }
+    componentDidUpdate(prevProps, prevState){
+        console.log('--ComponentDidUpdate--');
+    }
     handleLanguageChange(language){
         this.setState({
             loading: true,
@@ -86,36 +127,17 @@
             });
     }
     render() {
-        return this.state.loading ? (
-                <Loading />
-            ) : (
-                <div>
-                    <h1>Most Popular {this.state.language} Repos</h1>
-                    <ul>
-                        <li><a href = '#all' onClick={() => this.handleLanguageChange('all')}>All</a></li>
-                        <li><a href = '#js' onClick={() => this.handleLanguageChange('javascript')}>JavaScript</a></li>
-                        <li><a href = '#ruby' onClick={() => this.handleLanguageChange('ruby')}>Ruby</a></li>
-                        <li><a href = '#python' onClick={() => this.handleLanguageChange('python')}>Python</a></li>
-                        <li><a href = '#java' onClick={() => this.handleLanguageChange('java')}>Java</a></li>
-                    </ul>
-                    <div style={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                            }}>
-                        {this.state.repos.map(x => {
-                            return (
-                            <div key={x.name}>
-                                <ul>
-                                    <li><a href={x.html_url}>{x.name}</a></li>
-                                    <li>{`@${x.owner.login}`}</li>
-                                    <li>{`${x.stargazers_count} stars`}</li>
-                                </ul>
-                            </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            )
+        return (
+            <div>
+                <Nav 
+                    onLanguageChange={this.handleLanguageChange}/>
+                <RepoDisplay 
+                    loading={this.state.loading}
+                    repos={this.state.repos}
+                    language={this.state.language}
+                />
+        </div>
+        )
         }
     }
     ReactDOM.render(
