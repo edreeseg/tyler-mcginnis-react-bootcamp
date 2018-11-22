@@ -99,19 +99,19 @@
         this.state = {
             loading: true,
             repos: [],
+            language: 'all',
         };
         this.handleNavChange = this.handleNavChange.bind(this);
     }
     componentDidMount(){
-        API.fetchPopularRepos('all')
-            .then((repos) => {
-                this.setState({
-                    repos,
-                    loading: false,
-                    language: 'all',
-                });
-            });
+        this.handleLanguageChange(this.state.language);
     }
+
+    componentDidUpdate(prevProps, prevState){
+        if (prevState.language !== this.state.language) 
+            this.handleLanguageChange(this.state.language);
+    }
+
     handleLanguageChange(language){
         this.setState({
             loading: true,
@@ -125,15 +125,13 @@
                 });
             });
     }
+
     handleNavChange(language){
         this.setState({
             language,
         });
     }
-    componentDidUpdate(prevProps, prevState){
-        if (prevState.language !== undefined && prevState.language !== this.state.language) 
-            this.handleLanguageChange(this.state.language);
-    }
+
     render() {
         return (
             <div>
@@ -148,6 +146,7 @@
         )
         }
     }
+    
     ReactDOM.render(
     <App />,
     document.getElementById('app')
