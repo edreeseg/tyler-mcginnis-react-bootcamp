@@ -55,11 +55,11 @@
     function Nav(props){
         return (
             <ul>
-                <li><a href = '#all' onClick={() => props.onLanguageChange('all')}>All</a></li>
-                <li><a href = '#js' onClick={() => props.onLanguageChange('javascript')}>JavaScript</a></li>
-                <li><a href = '#ruby' onClick={() => props.onLanguageChange('ruby')}>Ruby</a></li>
-                <li><a href = '#python' onClick={() => props.onLanguageChange('python')}>Python</a></li>
-                <li><a href = '#java' onClick={() => props.onLanguageChange('java')}>Java</a></li>
+                <li><a href = '#all' onClick={() => props.onNavChange('all')}>All</a></li>
+                <li><a href = '#js' onClick={() => props.onNavChange('javascript')}>JavaScript</a></li>
+                <li><a href = '#ruby' onClick={() => props.onNavChange('ruby')}>Ruby</a></li>
+                <li><a href = '#python' onClick={() => props.onNavChange('python')}>Python</a></li>
+                <li><a href = '#java' onClick={() => props.onNavChange('java')}>Java</a></li>
             </ul>
         )
     }
@@ -69,7 +69,8 @@
                     <Loading />
                 ) : (
                     <div>
-                        <h1>Most Popular {props.language} Repos</h1>
+                        <h1>Most Popular {props.language === 'all' ? '' : 
+                        props.language.charAt(0).toUpperCase() + props.language.slice(1)} Repos</h1>
                         <div style={{
                                     display: 'flex',
                                     flexWrap: 'wrap',
@@ -97,7 +98,7 @@
             loading: true,
             repos: [],
         };
-        this.handleLanguageChange = this.handleLanguageChange.bind(this);
+        this.handleNavChange = this.handleNavChange.bind(this);
     }
     componentDidMount(){
         API.fetchPopularRepos('all')
@@ -109,9 +110,6 @@
                 });
             });
     }
-    componentDidUpdate(prevProps, prevState){
-        console.log('--ComponentDidUpdate--');
-    }
     handleLanguageChange(language){
         this.setState({
             loading: true,
@@ -121,16 +119,23 @@
                 this.setState({
                     repos,
                     loading: false,
-                    language: language === 'all' ? '' : 
-                    language.substring(0,1).toUpperCase()+language.substring(1),
+                    language,
                 });
             });
+    }
+    handleNavChange(language){
+        this.setState({
+            language,
+        });
+    }
+    componentDidUpdate(prevProps, prevState){
+        if (prevState.language !== this.state.language) this.handleLanguageChange(this.state.language);
     }
     render() {
         return (
             <div>
                 <Nav 
-                    onLanguageChange={this.handleLanguageChange}/>
+                    onNavChange={this.handleNavChange}/>
                 <RepoDisplay 
                     loading={this.state.loading}
                     repos={this.state.repos}
