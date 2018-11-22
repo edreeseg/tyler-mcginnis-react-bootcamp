@@ -54,13 +54,15 @@
 
     function Nav(props){
         return (
-            <ul>
-                <li><a href = '#all' onClick={() => props.onNavChange('all')}>All</a></li>
-                <li><a href = '#js' onClick={() => props.onNavChange('javascript')}>JavaScript</a></li>
-                <li><a href = '#ruby' onClick={() => props.onNavChange('ruby')}>Ruby</a></li>
-                <li><a href = '#python' onClick={() => props.onNavChange('python')}>Python</a></li>
-                <li><a href = '#java' onClick={() => props.onNavChange('java')}>Java</a></li>
-            </ul>
+            <nav>
+                <ul>
+                    <li><a href = '#all' onClick={() => props.onNavChange('all')}>All</a></li>
+                    <li><a href = '#js' onClick={() => props.onNavChange('javascript')}>JavaScript</a></li>
+                    <li><a href = '#ruby' onClick={() => props.onNavChange('ruby')}>Ruby</a></li>
+                    <li><a href = '#python' onClick={() => props.onNavChange('python')}>Python</a></li>
+                    <li><a href = '#java' onClick={() => props.onNavChange('java')}>Java</a></li>
+                </ul>
+            </nav>
         )
     }
 
@@ -68,7 +70,7 @@
         return props.loading ? (
                     <Loading />
                 ) : (
-                    <div>
+                    <section>
                         <h1>Most Popular {props.language === 'all' ? '' : 
                         props.language.charAt(0).toUpperCase() + props.language.slice(1)} Repos</h1>
                         <div style={{
@@ -87,7 +89,7 @@
                                 );
                             })}
                         </div>
-                    </div>
+                    </section>
                 )
     }
 
