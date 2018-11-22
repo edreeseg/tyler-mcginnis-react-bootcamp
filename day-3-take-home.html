@@ -106,7 +106,7 @@
                 this.setState({
                     repos,
                     loading: false,
-                    language: '',
+                    language: 'all',
                 });
             });
     }
@@ -129,7 +129,7 @@
         });
     }
     componentDidUpdate(prevProps, prevState){
-        if (prevState.language !== undefined &&prevState.language !== this.state.language) 
+        if (prevState.language !== undefined && prevState.language !== this.state.language) 
             this.handleLanguageChange(this.state.language);
     }
     render() {
