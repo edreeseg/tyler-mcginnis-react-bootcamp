@@ -129,7 +129,8 @@
         });
     }
     componentDidUpdate(prevProps, prevState){
-        if (prevState.language !== this.state.language) this.handleLanguageChange(this.state.language);
+        if (prevState.language !== undefined &&prevState.language !== this.state.language) 
+            this.handleLanguageChange(this.state.language);
     }
     render() {
         return (
